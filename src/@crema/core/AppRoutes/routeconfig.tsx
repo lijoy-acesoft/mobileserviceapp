@@ -1,8 +1,8 @@
 import { RxDashboard } from "react-icons/rx";
 import { FiMap, FiUsers } from "react-icons/fi";
 import { BiCarousel, BiCartAlt, BiErrorAlt, BiTask } from "react-icons/bi";
-import { HiDesktopComputer, HiOutlineAcademicCap, HiOutlineChartSquareBar, HiOutlineShoppingCart, HiShoppingBag } from "react-icons/hi";
-import { FaGlobe, FaRegCalendarAlt, FaRegHospital, FaUser } from "react-icons/fa";
+import { HiDesktopComputer, HiDeviceMobile, HiOutlineAcademicCap, HiOutlineChartSquareBar, HiOutlineShoppingCart, HiShoppingBag } from "react-icons/hi";
+import { FaClock, FaGlobe, FaRegCalendarAlt, FaRegHospital, FaUser } from "react-icons/fa";
 import {
   RiCustomerService2Line,
   RiDashboardLine,
@@ -36,7 +36,7 @@ import { BsLayoutTextSidebar } from "react-icons/bs";
 import { FaBox } from "react-icons/fa";
 import { BiCategory } from "react-icons/bi";
 import { MdOutlineCategory } from "react-icons/md";
-import { TbBrandAlipay } from "react-icons/tb";
+import { TbBrandAlipay, TbBrandProducthunt } from "react-icons/tb";
 import { RxBoxModel } from "react-icons/rx";
 import { FaGear, FaProductHunt, FaShop } from "react-icons/fa6";
 import { GoBriefcase } from "react-icons/go";
@@ -81,7 +81,7 @@ const routesConfig = [
     messageId: "sidebar.home.summery.service_detail",
     type: "item",
     icon: <HiDesktopComputer />,
-    url: "/apps/summery",
+    url: "/apps/service-details",
   },
   {
     id: "checkout",
@@ -90,6 +90,14 @@ const routesConfig = [
     type: "item",
     icon: <HiOutlineShoppingCart />,
     url: "/apps/checkout",
+  },
+  {
+    id: "purchase",
+    title: "Purchase",
+    messageId: "sidebar.home.purchase",
+    type: "item",
+    icon: <TbBrandProducthunt />,
+    url: "/apps/purchase",
   },
   
   {
@@ -126,19 +134,19 @@ const routesConfig = [
       },
       {
         id: "add_brand",
-        title: "Brand",
+        title: "Company",
         messageId: "sidebar.home.details.addBrand",
         type: "item",
         icon: <FaGlobe />,
-        url: "/apps/add_customer",
+        url: "/apps/company",
       },
       {
         id: "models",
         title: "Models",
         messageId: "sidebar.home.details.models",
         type: "item",
-        icon: <FaUsers />,
-        url: "/apps/add_customer",
+        icon: <HiDeviceMobile />,
+        url: "/apps/model",
       },
       {
         id: "status",
@@ -146,15 +154,15 @@ const routesConfig = [
         messageId: "sidebar.home.details.status",
         type: "item",
         icon: <FaUsers />,
-        url: "/apps/add_customer",
+        url: "/apps/status",
       },
       {
         id: "complaint",
         title: "Complaints",
         messageId: "sidebar.home.details.complaint",
         type: "item",
-        icon: <FaUsers />,
-        url: "/apps/add_customer",
+        icon: <FaGear />,
+        url: "/apps/complaints",
       },
     ]
   },
@@ -190,6 +198,14 @@ const routesConfig = [
         icon: <TiShoppingCart />,
         url: "/apps/inventory/products",
       },
+      {
+        id:"lowstock",
+        title:"Low Stock",
+        messageId:"sidebar.home.inventory.lowstock",
+        type:"item",
+        icon:<FaClock/>,
+        url:"/apps/inventory/lowstock"
+      }
     ]
   },
 

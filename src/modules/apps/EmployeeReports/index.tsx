@@ -15,9 +15,9 @@ const CheckoutPage = () => {
   const [newQty, setNewQty] = useState('');
   const [inclusive, setInclusive] = useState(true);
   const [dataVisible, setDataVisible] = useState(false);
-  const [extraTaxEnabledTech,setExtraTaxEnabledTech]:any = useState()
-  const [extraTaxEnabledInv,setExtraTaxEnabledInv]:any = useState()
-  const [extraTaxEnabledAcc,setExtraTaxEnabledAcc]:any = useState()
+  const [extraTaxEnabledTech, setExtraTaxEnabledTech]: any = useState()
+  const [extraTaxEnabledInv, setExtraTaxEnabledInv]: any = useState()
+  const [extraTaxEnabledAcc, setExtraTaxEnabledAcc]: any = useState()
 
   const [technicianDetails, setTechnicianDetails] = useState([
     { name: 'Technician A', task: 'Screen Repair', timeWorked: 2, perHourCost: 50, totalCost: 100 },
@@ -92,9 +92,22 @@ const CheckoutPage = () => {
     setTechnicianDetails(updatedDetails);
   };
 
+
+  const handleDeleteInventoryProduct = (index) => {
+    const updatedProducts = inventoryProducts.filter((_, i) => i !== index);
+    setInventoryProducts(updatedProducts);
+  };
+
+
+  const handleDeleteAccessory = (index) => {
+    const updatedAccessories = accessoryDetails.filter((_, i) => i !== index);
+    setAccessoryDetails(updatedAccessories);
+  };
+
+
   return (
     <Container>
-      <Typography variant="h4" gutterBottom>Checkout Page</Typography>
+      <Typography variant="h2" gutterBottom>Check-Out </Typography>
 
       <Box component="section" mb={4}>
         <Typography variant="h6" gutterBottom>Item and Customer Detail</Typography>
@@ -132,7 +145,7 @@ const CheckoutPage = () => {
             <Grid item xs={12} sm={6}>
               <TextField label="Invoice No." value={dummyData.invoiceNo} fullWidth disabled />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            {/* <Grid item xs={12} sm={6}>
               <TextField label="Date" value={format(new Date(), 'yyyy-MM-dd')} fullWidth disabled />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -157,7 +170,7 @@ const CheckoutPage = () => {
                   ))}
                 </Select>
               </FormControl>
-            </Grid>
+            </Grid> */}
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
                 <InputLabel>Problem Solved</InputLabel>
@@ -168,7 +181,7 @@ const CheckoutPage = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            {/* <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
                 <InputLabel>Serviced By</InputLabel>
                 <Select value={servicedBy} onChange={(e) => setServicedBy(e.target.value)}>
@@ -187,7 +200,7 @@ const CheckoutPage = () => {
                   ))}
                 </Select>
               </FormControl>
-            </Grid>
+            </Grid> */}
             <Grid item xs={12}>
               <TextField label="Service Report" multiline rows={4} fullWidth />
             </Grid>
@@ -201,7 +214,14 @@ const CheckoutPage = () => {
       {dataVisible && (
         <>
           <Box component="section" mb={4}>
-            <Typography variant="h2" gutterBottom>Technician Details</Typography>
+            <Grid sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Typography variant="h2" gutterBottom>Technician Details</Typography>
+              <FormControlLabel
+                control={<Checkbox checked={extraTaxEnabledTech} onChange={() => setExtraTaxEnabledTech(!extraTaxEnabledTech)} />}
+                label="Add Tax"
+              />
+            </Grid>
+
             <TableContainer component={Paper}>
               <Table>
                 <TableHead>
@@ -238,29 +258,16 @@ const CheckoutPage = () => {
                 </TableBody>
               </Table>
             </TableContainer>
-            <Grid container xs={12} mt={3} p={3}>
-                <Grid xs={6}>
-                <FormControlLabel
-                  control={<Checkbox checked={extraTaxEnabledTech} onChange={() => setExtraTaxEnabledTech(!extraTaxEnabledTech)} />}
-                  label="Add Extra Tax"
-                />
-                </Grid>
-                 {extraTaxEnabledTech   && (
-                <Grid item xs={6} sm={6}>
-                  <TextField
-                    label="Tax %"
-                    // value={extraTaxPercentage}
-                    // onChange={(e) => setExtraTaxPercentage(e.target.value)}
-                    type="number"
-                    fullWidth
-                  />
-                </Grid>
-              )}
-              </Grid>
           </Box>
 
           <Box component="section" mb={4}>
-            <Typography variant="h2" gutterBottom>Spare Parts</Typography>
+            <Grid sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Typography variant="h2" gutterBottom>Spare Parts</Typography>
+              <FormControlLabel
+                control={<Checkbox checked={extraTaxEnabledTech} onChange={() => setExtraTaxEnabledTech(!extraTaxEnabledTech)} />}
+                label="Add Tax"
+              />
+            </Grid>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
@@ -289,6 +296,7 @@ const CheckoutPage = () => {
                           <TableCell>Quantity</TableCell>
                           <TableCell>Price per Unit</TableCell>
                           <TableCell>Total Price</TableCell>
+                          <TableCell>Action</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -301,6 +309,9 @@ const CheckoutPage = () => {
                               <TableCell>{product.qty}</TableCell>
                               <TableCell>{item ? item.price : 0}</TableCell>
                               <TableCell>{totalPrice}</TableCell>
+                              <TableCell>
+                              <Button onClick={() => handleDeleteInventoryProduct(index)}>Delete</Button>
+                            </TableCell>
                             </TableRow>
                           );
                         })}
@@ -309,30 +320,18 @@ const CheckoutPage = () => {
                   </TableContainer>
                 </Box>
               </Grid>
-              <Grid container xs={12} mt={3} p={3}>
-                <Grid xs={6}>
-                <FormControlLabel
-                  control={<Checkbox checked={extraTaxEnabledInv} onChange={() => setExtraTaxEnabledInv(!extraTaxEnabledInv)} />}
-                  label="Add Extra Tax"
-                />
-                </Grid>
-                 {extraTaxEnabledInv && (
-                <Grid item xs={6} sm={6}>
-                  <TextField
-                    label="Tax %"
-                    // value={extraTaxPercentage}
-                    // onChange={(e) => setExtraTaxPercentage(e.target.value)}
-                    type="number"
-                    fullWidth
-                  />
-                </Grid>
-              )}
-              </Grid>
+
             </Grid>
           </Box>
 
           <Box component="section" mb={4}>
-            <Typography variant="h2" gutterBottom>Accessory</Typography>
+            <Grid sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Typography variant="h2" gutterBottom>Accessory</Typography>
+              <FormControlLabel
+                control={<Checkbox checked={extraTaxEnabledTech} onChange={() => setExtraTaxEnabledTech(!extraTaxEnabledTech)} />}
+                label="Add Tax"
+              />
+            </Grid>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
@@ -361,6 +360,7 @@ const CheckoutPage = () => {
                           <TableCell>Quantity</TableCell>
                           <TableCell>Price per Unit</TableCell>
                           <TableCell>Total Price</TableCell>
+                          <TableCell>Action</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -373,6 +373,9 @@ const CheckoutPage = () => {
                               <TableCell>{accessory.qty}</TableCell>
                               <TableCell>{item ? item.price : 0}</TableCell>
                               <TableCell>{totalPrice}</TableCell>
+                              <TableCell>
+                                <Button onClick={() => handleDeleteAccessory(index)}>Delete</Button>
+                              </TableCell>
                             </TableRow>
                           );
                         })}
@@ -381,26 +384,8 @@ const CheckoutPage = () => {
                   </TableContainer>
                 </Box>
               </Grid>
-              <Grid container xs={12} mt={3} p={3}>
-                <Grid xs={6}>
-                <FormControlLabel
-                  control={<Checkbox checked={extraTaxEnabledAcc} onChange={() => setExtraTaxEnabledAcc(extraTaxEnabledAcc)} />}
-                  label="Add Extra Tax"
-                />
-                </Grid>
-                 {extraTaxEnabledAcc&& (
-                <Grid item xs={6} sm={6}>
-                  <TextField
-                    label="Tax %"
-                    // value={extraTaxPercentage}
-                    // onChange={(e) => setExtraTaxPercentage(e.target.value)}
-                    type="number"
-                    fullWidth
-                  />
-                </Grid>
-              )}
-              </Grid>
-             
+
+
             </Grid>
           </Box>
 
@@ -412,20 +397,13 @@ const CheckoutPage = () => {
           <Typography variant="h6" gutterBottom>Other</Typography>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <FormControlLabel
-                control={<Checkbox checked={deliveryWithoutInvoice} onChange={() => setDeliveryWithoutInvoice(!deliveryWithoutInvoice)} />}
-                label="Delivery without invoice"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
               <TextField label="Total Qty" fullWidth />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <FormControlLabel control={<Checkbox />} label="Taxable" />
-            </Grid>
-            <Grid item xs={12} sm={6}>
               <FormControl component="fieldset">
-                <RadioGroup row value={inclusive ? 'inclusive' : 'exclusive'} onChange={(e) => setInclusive(e.target.value === 'inclusive')}>
+                <RadioGroup
+                  row
+                >
                   <FormControlLabel value="inclusive" control={<Radio />} label="Inclusive" />
                   <FormControlLabel value="exclusive" control={<Radio />} label="Exclusive" />
                 </RadioGroup>
@@ -445,6 +423,18 @@ const CheckoutPage = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField label="Grand Total" fullWidth value={calculateTotal()} disabled />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel>Select Status</InputLabel>
+                <Select
+                  displayEmpty
+                >
+                  <MenuItem value="" disabled>Select Status</MenuItem>
+                  <MenuItem value="completed">Payment Completed</MenuItem>
+                  <MenuItem value="pending">Payment Pending</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={12}>
               <Button variant="contained">Print</Button>

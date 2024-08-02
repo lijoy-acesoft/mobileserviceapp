@@ -1,6 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import AppSelect from "@crema/components/AppSelect";
+import AppSearchBar from "@crema/components/AppSearchBar";
 import { Hidden } from "@mui/material";
 import { useIntl } from "react-intl";
 import AppsPagination from "@crema/components/AppsPagination";
@@ -32,10 +32,14 @@ const DealerHeaderWithSearch = (props: Props) => {
           alignItems: "center",
         }}
       >
-        <AppSelect
-          menus={["All Projects", "Project 1", "Project 2"]}
-          defaultValue={"All Projects"}
-          onChange={() => {}}
+        <AppSearchBar
+          iconPosition="right"
+          overlap={false}
+          value={filterText}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            onSetFilterText(event.target.value)
+          }
+          placeholder={messages["common.searchHere"] as string}
         />
       </Box>
       <Hidden smDown>

@@ -52,10 +52,18 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
   setFieldValue,
 }) => {
   const [isEditMode, setEditMode] = useState(false);
-  console.log(values)
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: {
+      'image/png': ['.png', '.jpg', '.jpeg'],
+    },
+    onDrop: (acceptedFiles) => {
+      setFieldValue('photoURL', URL.createObjectURL(acceptedFiles[0]));
+    },
+  });
 
   return (
     <Form noValidate autoComplete='off'>
+
       <Typography
         component='h3'
         sx={{
@@ -73,7 +81,22 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
           mb: { xs: 5, lg: 6 },
         }}
       >
-
+        <AvatarViewWrapper {...getRootProps({ className: 'dropzone' })}>
+          <input {...getInputProps()} />
+          <label htmlFor='icon-button-file'>
+            <Avatar
+              sx={{
+                width: { xs: 50, lg: 64 },
+                height: { xs: 50, lg: 64 },
+                cursor: 'pointer',
+              }}
+              src={values.photoURL}
+            />
+            <Box className='edit-icon'>
+              <EditIcon />
+            </Box>
+          </label>
+        </AvatarViewWrapper>
         <Box
           sx={{
             ml: 4,
@@ -84,7 +107,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
               fontWeight: Fonts.MEDIUM,
             }}
           >
-            {values.displayName || 'John Doe'}
+            {values.organizationName || 'John Doe'}
           </Typography>
           <Typography
             sx={{
@@ -107,7 +130,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
         {isEditMode ? (
           <>
 
-            <Grid item xs={12} md={6} sx={{mt:5}}>
+            <Grid item xs={12} md={6} sx={{ mt: 5 }}>
               <AppTextField
                 name='organizationName'
                 fullWidth
@@ -116,7 +139,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                 onChange={(e) => setFieldValue('organizationName', e.target.value)}
               />
             </Grid>
-            <Grid item xs={12} md={6} sx={{mt:5}}>
+            <Grid item xs={12} md={6} sx={{ mt: 5 }}>
               <AppTextField
                 name='address'
                 fullWidth

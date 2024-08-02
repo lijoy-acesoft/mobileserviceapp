@@ -1,9 +1,10 @@
-import Box from "@mui/material/Box";
 import ListItem from "@mui/material/ListItem";
+import Box from "@mui/material/Box";
+import ItemMenu from "../ItemMenu";
 import { styled } from "@mui/material/styles";
 import { alpha } from "@mui/material";
-
-type Props = {};
+import { FloorMasterObj } from "@crema/types/models/apps/FloorMaster";
+import { LabelOutlined } from "@mui/icons-material";
 
 const ListItemWrapper = styled(ListItem)(({ theme }) => {
   return {
@@ -11,6 +12,7 @@ const ListItemWrapper = styled(ListItem)(({ theme }) => {
     flexDirection: "row",
     alignItems: "center",
     fontSize: 14,
+    borderBottom: `1px solid ${theme.palette.divider}`,
     paddingTop: 8,
     paddingBottom: 8,
     paddingLeft: 10,
@@ -42,9 +44,34 @@ const ListItemWrapper = styled(ListItem)(({ theme }) => {
   };
 });
 
-const TableHeader = (props: Props) => {
+interface Props {
+  item: FloorMasterObj;
+  setToggleDetails: (show: boolean) => void;
+  setToggleEdit: (show: boolean) => void;
+  setToggleDelete: (show: boolean) => void;
+  [x: string]: any;
+}
+const DealerListItem = ({
+  item,
+  setToggleDetails,
+  setToggleEdit,
+  setToggleDelete,
+}: Props) => {
+  function getRandomDeepColor() {
+    const deepColors = [
+      "rgb(0, 0, 139)", // Deep Blue
+      "rgb(0, 100, 0)", // Deep Green
+      "rgb(139, 0, 0)", // Deep Red
+      "rgb(148, 0, 211)", // Deep Violet
+      "rgb(101, 67, 33)", // Deep Brown
+    ];
+
+    const randomIndex = Math.floor(Math.random() * deepColors.length);
+    return deepColors[randomIndex];
+  }
+
   return (
-    <ListItemWrapper dense>
+    <ListItemWrapper dense key={item.floor_code}>
       <Box
         sx={{
           width: { xs: "75%", sm: "80%", md: "100%" },
@@ -57,90 +84,82 @@ const TableHeader = (props: Props) => {
           sx={{
             mr: 3,
             width: { md: "18%" },
-            fontWeight: 600,
           }}
           component="span"
         >
-          Activity
+          {item.floor_code}
         </Box>
 
+        <Box
+          sx={{
+            mr: 3,
+            width: { md: "16%" },
+          }}
+          component="span"
+        >
+          {item.floor_name}
+        </Box>
         <Box
           sx={{
             mr: 3,
             width: { md: "18%" },
-            fontWeight: 600,
           }}
           component="span"
         >
-          Employee
+          {item.building_code}
         </Box>
-
         <Box
-          component="span"
           sx={{
             mr: 3,
             width: { md: "18%" },
-            fontWeight: 600,
           }}
+          component="span"
         >
-          Per-Hour Cost (AED)
+          {item.building_name}
         </Box>
+        <Box
+          sx={{
+            mr: 3,
+            width: { md: "18%" },
+          }}
+          component="span"
+        >
+          {item.site_code}
+        </Box>
+      </Box>
 
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-end",
+        }}
+      >
         <Box
           component="span"
           sx={{
-            mr: 3,
-            width: { md: "17%" },
-            fontWeight: 600,
+            display: "flex",
+            alignItems: "center",
+            marginLeft: "auto",
           }}
         >
-          Actual Hours
-        </Box>
-        <Box
-          component="span"
-          sx={{
-            mr: 3,
-            width: { md: "20%" },
-            fontWeight: 600,
-          }}
-        >
-          Actual Total Cost
-        </Box>
-        <Box
-          component="span"
-          sx={{
-            mr: 3,
-            width: { md: "20%" },
-            fontWeight: 600,
-          }}
-        >
-          Planned Hours
-        </Box>
-        <Box
-          component="span"
-          sx={{
-            mr: 3,
-            width: { md: "20%" },
-            fontWeight: 600,
-          }}
-        >
-          Planned Total Cost
-        </Box>
-        <Box
-          component="span"
-          sx={{
-            mr: 3,
-            width: { md: "20%" },
-            fontWeight: 600,
-          }}
-        >
-          Cost Variance
+          <span className="conActionHoverHideRoot">
+            <LabelOutlined
+              sx={{
+                ml: 2,
+                color: getRandomDeepColor(),
+              }}
+            />
+          </span>
+          <ItemMenu
+            setToggleDetails={setToggleDetails}
+            setToggleEdit={setToggleEdit}
+            setToggleDelete={setToggleDelete}
+          />
         </Box>
       </Box>
     </ListItemWrapper>
   );
 };
 
-export default TableHeader;
-
-TableHeader.defaultProps = {};
+export default DealerListItem;

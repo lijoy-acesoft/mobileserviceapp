@@ -1,84 +1,68 @@
-import AppList from "@crema/components/AppList";
-import CustomListEmptyResult from "@crema/components/AppList/CustomListEmptyResult";
-import CommonListSkeleton from "@crema/components/AppSkeleton/CommonListSkelton";
-import { Hidden } from "@mui/material";
-import ListItem from "./ListItem";
-import ListItemMobile from "./ListItem/ListItemMobile";
-import { FloorMasterObj } from "@crema/types/models/apps/FloorMaster";
+import { IconButton, TableBody, TableCell, TableRow } from "@mui/material";
+import { TiDeleteOutline } from "react-icons/ti";
+import { RiEditCircleLine } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
-  list: FloorMasterObj[];
-  loading: boolean;
-  setToggleDetails: (show: boolean) => void;
-  setToggleEdit: (show: boolean) => void;
-  setToggleDelete: (show: boolean) => void;
+  list: any;
+  index?: boolean;
+  setToggleDetails?: (show: boolean) => void;
+  handleDeleteClick: any;
+  handleEditClick: any;
 };
 
 const TableView = (props: Props) => {
-  const { list, loading, setToggleDetails, setToggleEdit, setToggleDelete } =
-    props;
+  const { list, index, setToggleDetails, handleDeleteClick, handleEditClick } = props;
+  const navigate = useNavigate();
+
+  const handleEditNavigation = () => {
+    navigate(`/apps/technician/${list?.employeeCode}/update-technician`);
+  };
 
   return (
-    <>
-      <Hidden smDown>
-        {loading ? (
-          <CommonListSkeleton />
-        ) : (
-          <AppList
-            data={list}
-            animation="transition.slideUpIn"
+    <TableBody>
+      <TableRow key={list?.employeeCode}>
+        <TableCell>{list?.employeeCode}</TableCell>
+        <TableCell>{list?.employeeName}</TableCell>
+        <TableCell>{list?.nationality}</TableCell>
+        <TableCell>{list?.designation}</TableCell>
+        <TableCell>{list?.joiningDate}</TableCell>
+        <TableCell>{list?.mobileNo}</TableCell>
+        <TableCell>{list?.email}</TableCell>
+        <TableCell>{list?.visaNumber}</TableCell>
+        <TableCell>{list?.visaExpiryDate}</TableCell>
+        <TableCell>{list?.activeStatus ? 'Active' : 'Inactive'}</TableCell>
+        <TableCell align="left">
+          <IconButton
+            onClick={handleEditNavigation}
             sx={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
+              color: (theme) => theme.palette.primary.dark,
+              padding: 2,
+              "& .MuiSvgIcon-root": {
+                fontSize: 22,
+              },
             }}
-            ListEmptyComponent={
-              <CustomListEmptyResult
-                loading={loading}
-                placeholder={<CommonListSkeleton />}
-              />
-            }
-            renderRow={(item) => (
-              <ListItem
-                key={item.site_code}
-                item={item}
-                setToggleDetails={setToggleDetails}
-                setToggleEdit={setToggleEdit}
-                setToggleDelete={setToggleDelete}
-              />
-            )}
-          />
-        )}
-      </Hidden>
-
-      <Hidden smUp>
-        <AppList
-          data={list}
-          animation="transition.slideUpIn"
-          sx={{
-            p: 2,
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            width: "100%",
-          }}
-          ListEmptyComponent={
-            <CustomListEmptyResult
-              loading={loading}
-              placeholder={<CommonListSkeleton />}
-            />
-          }
-          renderRow={(dealer) => (
-            <ListItemMobile key={dealer.site_code} dealer={dealer} />
-          )}
-        />
-      </Hidden>
-    </>
+            size="large"
+          >
+            <RiEditCircleLine size={25} />
+          </IconButton>
+          <IconButton
+            onClick={handleDeleteClick}
+            sx={{
+              color: (theme) => theme.palette.error.light,
+              padding: 2,
+              "& .MuiSvgIcon-root": {
+                fontSize: 22,
+              },
+            }}
+            size="large"
+          >
+            <TiDeleteOutline size={28} />
+          </IconButton>
+        </TableCell>
+      </TableRow>
+    </TableBody>
   );
 };
 
 export default TableView;
-
-TableView.defaultProps = {
-  list: [],
-};

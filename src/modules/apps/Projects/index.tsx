@@ -12,6 +12,7 @@ import AddNewStatus from "@crema/components/apps/AddNewStatus";
 import AddNewAccessories from "@crema/components/apps/AddNewAccessories";
 import ImageUploadField from "./ImageUploadField"; // Import your new component
 import { generatePDF } from "./servicepdf";
+import AddNewCompany from "@crema/components/apps/AddNewBrand";
 
 // Validation schema
 const validationSchema = Yup.object({
@@ -186,7 +187,7 @@ const TableListing = () => {
                   <Box mb={2}>
                     <h3>Accessories</h3>
                   </Box>
-                  <Grid container spacing={2} sx={{ maxHeight: '350px', overflowY: 'auto' }}>
+                  <Grid container spacing={2} sx={{ maxHeight: '300px', overflowY: 'auto' }}>
                     {["Charger", "Phone Box", "Laptop Bag", "Headphones", "Charger", "Phone Box", "Laptop Bag", "Headphones", "Charger", "Phone Box", "Laptop Bag", "Headphones"].map((accessory, index) => (
                       <Grid item xs={12} key={index}>
                         <FormControlLabel
@@ -241,9 +242,9 @@ const TableListing = () => {
                     <Grid container item spacing={2}>
                       {[
                         { label: "Due Date", name: "due_date", type: "date" },
-                        { label: "Cash A/C", name: "cash_ac" },
                         { label: "Estimate Amount", name: "estimate_amount" },
-                        { label: "Advance Amount", name: "advance_amount" }
+                        { label: "Advance Amount", name: "advance_amount" },
+                        { label: "Balance Amount", name: "balance_amount" },
                       ].map((field, index) => (
                         <Grid item xs={12} sm={6} md={6} key={index}>
                           <CustomTextField
@@ -297,7 +298,7 @@ const TableListing = () => {
               </Grid>
             </Grid>
             <AddNewCustomer open={openCreateCustomer} handleClose={() => setOpenCreateCustomer(false)} />
-            <AddNewComplaint open={openCreateCompany} handleClose={() => setOpenCreateCompany(false)} />
+            <AddNewCompany open={openCreateCompany} handleClose={() => setOpenCreateCompany(false)} />
             <AddNewModel open={openCreateModel} handleClose={() => setOpenCreateModel(false)} />
             <AddNewStatus open={openCreateStatus} handleClose={() => setOpenCreateStatus(false)} />
             <AddNewComplaint open={openCreateComplains} handleClose={() => setOpenCreateComplains(false)} />

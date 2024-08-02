@@ -80,14 +80,38 @@ const Employees = React.lazy(
 const ProjectTasks = React.lazy(
   () => import("../../../modules/apps/ProjectTasks/index")
 );
-
+const Brand = React.lazy(
+  () => import("../../../modules/apps/Brands")
+);
+const Models = React.lazy(
+  () => import("../../../modules/apps/Models")
+);
+const Status = React.lazy(
+  () => import("../../../modules/apps/Status")
+);
+const Complaints = React.lazy(
+  () => import("../../../modules/apps/Complaints")
+);
 const ProjectReports = React.lazy(
-  () => import("../../../modules/apps/ProjectReports/index")
+  () => import("../../../modules/apps/customer/index")
 );
 
 const EmployeeReports = React.lazy(
   () => import("../../../modules/apps/EmployeeReports/index")
 );
+const LowStock = React.lazy(
+  () => import("../../../modules/apps/LowStockProduct/index")
+);
+const EditTechnician = React.lazy(
+  () => import("../../../modules/apps/ModelMaster/UpdateItem/index")
+);
+const AddTechnician = React.lazy(
+  () => import("../../../modules/apps/ModelMaster/AddItem/index")
+);
+
+const Purchase = React.lazy(
+  () => import('../../../modules/apps/Purchase/index')
+)
 
 export const appsConfig = [
   {
@@ -184,7 +208,7 @@ export const appsConfig = [
   {
     permittedRole: RoutePermittedRole.User,
     path: "/apps/technician-master",
-    element: <Location />,
+    element: <ModelMaster />,
   },
   // {
   //   permittedRole: RoutePermittedRole.User,
@@ -292,4 +316,49 @@ export const appsConfig = [
     path: "/apps/checkout",
     element: <EmployeeReports />,
   },
+  {
+    permittedRole: RoutePermittedRole.User,
+    path: "/apps/service-details",
+    element: <Mail />,
+  },
+  {
+    permittedRole: RoutePermittedRole.User,
+    path: "/apps/company",
+    element: < Brand/>,
+  },
+  {
+    permittedRole: RoutePermittedRole.User,
+    path: "/apps/model",
+    element: < Models/>,
+  },
+  {
+    permittedRole: RoutePermittedRole.User,
+    path: "/apps/status",
+    element: < Status/>,
+  },
+  {
+    permittedRole: RoutePermittedRole.User,
+    path: "/apps/complaints",
+    element: < Complaints/>,
+  },
+  {
+    permittedRole:RoutePermittedRole.User,
+    path:"/apps/inventory/lowstock",
+    element:<LowStock/>
+  },
+  {
+    permittedRole:RoutePermittedRole.User,
+    path:"/apps/technician/create-technician",
+    element:<AddTechnician/>
+  },
+  {
+    permittedRole:RoutePermittedRole.User,
+    path:"/apps/technician/:id/update-technician",
+    element:<EditTechnician/>
+  },
+  {
+    permittedRole:RoutePermittedRole.User,
+    path:'/apps/purchase',
+    element:<Purchase/>
+  }
 ];

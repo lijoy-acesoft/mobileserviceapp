@@ -27,9 +27,12 @@ const AppLogo: React.FC<AppLogoProps> = ({ color }) => {
       }}
       className='app-logo'
     >
-      <Logo fill={theme.palette.primary.main} />
+      {/* <Logo fill={theme.palette.primary.main} /> */}
       <Box
         sx={{
+          fontSize:30,
+          fontWeight:900,
+          fontFamily:"fantasy",
           mt: 1,
           display: { xs: 'none', md: 'block' },
           '& svg': {
@@ -37,7 +40,7 @@ const AppLogo: React.FC<AppLogoProps> = ({ color }) => {
           },
         }}
       >
-        <LogoText fill={alpha(theme.palette.text.primary, 0.8)} />
+        Mobile Service
       </Box>
     </Box>
   );

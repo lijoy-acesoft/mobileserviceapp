@@ -4,10 +4,10 @@ import CommonListSkeleton from "@crema/components/AppSkeleton/CommonListSkelton"
 import { Hidden } from "@mui/material";
 import ListItem from "./ListItem";
 import ListItemMobile from "./ListItem/ListItemMobile";
-import { ProjectReportType } from "@crema/types/models/apps/ProjectReport";
+import { EmployeeReportType } from "@crema/types/models/apps/EmployeeReport";
 
 type Props = {
-  list: ProjectReportType[];
+  list: EmployeeReportType[];
   loading: boolean;
   setToggleDetails: (show: boolean) => void;
   setToggleEdit: (show: boolean) => void;
